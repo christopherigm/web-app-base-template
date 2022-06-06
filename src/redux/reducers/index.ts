@@ -1,8 +1,8 @@
 import {
   combineReducers
 } from 'redux';
-import SystemReducer from './system-reducer';
-import UserReducer from './user-reducer';
+import SystemReducer from './system';
+import UserReducer from './user';
 
 const reducers = {
   system: SystemReducer,

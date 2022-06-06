@@ -1,8 +1,8 @@
 import { APIPost } from 'src/api/communicator';
 import store from 'src/redux/store';
 import { SetUserData } from 'src/redux/actions/user';
-import GetUser from 'src/api/api-helpers/get-user';
-import GetUserProfile from 'src/api/api-helpers/get-user-profile';
+import GetUser from './get-user';
+import GetUserProfile from './get-user-profile';
 
 interface payload {
   email: string;

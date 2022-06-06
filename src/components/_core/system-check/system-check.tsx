@@ -13,7 +13,6 @@ import SystemValues from 'src/constants/SystemValues';
 import { FILE_PREFIX } from 'src/constants/SystemValues';
 import SetSystemData from 'src/redux/actions/system';
 import * as M from 'materialize-css';
-import GlobalAlertDialog from 'src/components/_core/global-alert-dialog';
 
 const env = SystemValues.getInstance();
 const isMobileApp = env.isMobileApp;
@@ -58,9 +57,7 @@ const SystemCheck = (): React.ReactElement => {
   }, [M, window]);
 
   return (
-    <>
-      <GlobalAlertDialog />
-    </>
+    <></>
   );
 };
 

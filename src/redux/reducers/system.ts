@@ -9,7 +9,9 @@ const initialState: any = {
     prefix: ''
   },
   configurations: null,
-  globalAlert: null
+  globalAlert: {
+    active: false
+  }
 };
 
 const SystemReducer = (state = initialState, action: any): any => {

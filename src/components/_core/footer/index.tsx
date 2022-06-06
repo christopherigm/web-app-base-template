@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as M from 'materialize-css';
 import SystemValues from 'src/constants/SystemValues';
-import { Link } from 'react-router-dom';
 import SystemCheck from 'src/components/_core/system-check/system-check';
+import GlobalAlertDialog from 'src/components/_core/global-alert-dialog';
+import SystemConfigurationsLoader from 'src/components/_core/system-configuration-loader';
 import './footer.scss';
 
 const Footer = (): React.ReactElement => {
@@ -61,7 +63,9 @@ const Footer = (): React.ReactElement => {
         </div>
       </div>
     </footer>
+    <SystemConfigurationsLoader />
     <SystemCheck />
+    <GlobalAlertDialog />
     </>
   );
 };

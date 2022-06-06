@@ -10,15 +10,18 @@ import {
   SubTitle,
   StrongText,
   DateParser,
-  GetMoneyFormat
+  GetMoneyFormat,
+  LoadingIndicator
 } from 'rrmc';
 import { useSelector } from 'react-redux';
-import './changelog.scss';
+import APISDK from 'src/api/api-sdk';
 import NavBar from 'src/components/_core/nav-bar';
 import Footer from 'src/components/_core/footer';
 import TaskItem from './task-item';
+import './changelog.scss';
 
-const ChangeLogPage = (): React.ReactElement => {
+const ChangeLog = (): React.ReactElement => {
+  const [isLoading, setIsLoading]: any = useState(false);
   const [sectionMenu, setSectionMenu]: any = useState([]);
   const system = useSelector((state: any) => state.system);
   const prefix = system.platform.prefix;
@@ -32,15 +35,22 @@ const ChangeLogPage = (): React.ReactElement => {
   let totalToPayOfProject = 0;
 
   useEffect(() => {
-    // fetchData('sprints/?include=tasks,tasks.user&page[size]=100')
-    //   .then((response: any) =>{
-    //     setitems(response);
-    //   });
-    setitems([]);
-  }, []);
+    setIsLoading(true);
+    APISDK.GetChangeLog()
+      .then((response: any) => {
+        setIsLoading(false);
+        console.log(response);
+        setitems(response);
+      })
+      .catch((error: any) => {
+        setIsLoading(false);
+        console.log(error);
+      });
+  }, [APISDK]);
 
   return (
     <div className='page'>
+      <LoadingIndicator isLoading={isLoading} />
       <NavBar
         setSectionMenu={setSectionMenu}
         sectionMenu={sectionMenu} />
@@ -52,10 +62,10 @@ const ChangeLogPage = (): React.ReactElement => {
       <HorizontalSpace size='medium' />
       <div className='container ChangeLog'>
       {
-        items && items.data ?
+        items && items.length ?
           <>
           {
-            items.data.map((i: any, index: number) => {
+            items.map((i: any, index: number) => {
               if ( !i.relationships.tasks.data.length ) return null;
               let totalTime = 0;
               const pricePerHour = i.attributes.price_per_hour;
@@ -183,4 +193,4 @@ const ChangeLogPage = (): React.ReactElement => {
   );
 };
 
-export default ChangeLogPage;
+export default ChangeLog;

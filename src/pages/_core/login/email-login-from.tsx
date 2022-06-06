@@ -34,10 +34,6 @@ const EmailLoginFrom = ( props: any ): React.ReactElement => {
           className='waves-effect waves-light btn right cyan darken-1 right white-text'
           disabled={!validForm()} />
       </div>
-      <div className={`col s12 ${ props.isLoading ? '' : 'hide' }`}><HorizontalSpace size='small' /></div>
-      <div className={`progress col s12 ${ props.isLoading ? '' : 'hide' }`}>
-        <div className='indeterminate'></div>
-      </div>
     </form>
   );
 };

@@ -2,8 +2,7 @@ import React, {
   useEffect
 } from 'react';
 import {
-  useNavigate,
-  useLocation
+  useNavigate
 } from 'react-router-dom';
 import {
   useSelector,
@@ -14,22 +13,13 @@ import { FILE_PREFIX } from 'src/constants/SystemValues';
 import SetSystemData from 'src/redux/actions/system';
 import * as M from 'materialize-css';
 
-const env = SystemValues.getInstance();
-const isMobileApp = env.isMobileApp;
+const systemValues = SystemValues.getInstance();
+const isMobileApp = systemValues.isMobileApp;
 
 const SystemCheck = (): React.ReactElement => {
-  const login = useSelector((state: any) => state.login);
+  const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const navigate: any = useNavigate();
-  const location: any = useLocation();
-
-  const redirect = () => {
-    if ( location.path === 'login' ) {
-      if ( login.id ) {
-        navigate('/');
-      }
-    }
-  };
 
   useEffect(() => {
     const w: any = window;
@@ -52,7 +42,12 @@ const SystemCheck = (): React.ReactElement => {
         }
       });
     } else {
-      redirect();
+      const pathname = window.location.pathname || '';
+      if ( ( pathname === '/login' ||
+        pathname === '/create-account') &&
+        user && user.jwt && user.jwt.access ) {
+        navigate('/');
+      }
     }
   }, [M, window]);
 

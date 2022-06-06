@@ -9,6 +9,14 @@ import {
 import { Modal } from 'rrmc';
 import { CloseGlobalAlertDialog } from 'src/redux/actions/set-global-alert-dialog';
 
+/* eslint-disable no-unused-vars */
+export enum GlobalAlertSizeOptions {
+  small = 'small',
+  medium = 'medium',
+  large = 'large'
+}
+/* eslint-enable no-unused-vars */
+
 const GlobalAlertDialog = (): React.ReactElement => {
   const system = useSelector((state: any) => state.system);
   const dispatch = useDispatch();
@@ -36,7 +44,7 @@ const GlobalAlertDialog = (): React.ReactElement => {
           title={system.globalAlert.title}
           message={system.globalAlert.message}
           onCloseEnd={onCloseEnd}
-          size='small' /> : null
+          size={system.globalAlert.size} /> : null
     }
     </>
   );

@@ -28,7 +28,8 @@ export const APIGet = ( endpoint: string, includeBaseURL = true ): Promise<any> 
         console.log(
           '\n====== APIGet Error ======',
           '\nURL:', url,
-          '\nJWT:', jwt
+          '\nJWT:', jwt,
+          '\nError', JSON.stringify(error)
         );
         return rej(error);
       });
@@ -56,7 +57,8 @@ export const APIPost = ( endpoint: string, data: any, includeBaseURL = true ): P
           '\nData sent:', data,
           '\nURL:', url,
           '\nJWT:', jwt,
-          '\nstore', store.getState().user
+          '\nstore', store.getState().user,
+          '\nError', JSON.stringify(error)
         );
         return rej(error);
       });
@@ -83,7 +85,8 @@ export const APIPatch = ( endpoint: string, data: any, includeBaseURL = true ): 
           '\n====== APIPatch Error ======',
           '\nData sent:', data,
           '\nURL:', url,
-          '\nJWT:', jwt
+          '\nJWT:', jwt,
+          '\nError', JSON.stringify(error)
         );
         return rej(error);
       });
@@ -106,6 +109,12 @@ export const APIDelete = ( endpoint: string, includeBaseURL = true ): Promise<an
         return res(response.data);
       })
       .catch((error) => {
+        console.log(
+          '\n====== APIDelete Error ======',
+          '\nURL:', url,
+          '\nJWT:', jwt,
+          '\nError', JSON.stringify(error)
+        );
         return rej(error);
       });
   });

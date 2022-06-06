@@ -7,29 +7,20 @@ import React, {
 import EmailLoginFrom from './email-login-from';
 import {
   SubTitle,
-  ArrayErrorsToHTMLList,
-  Modal
+  ArrayErrorsToHTMLList
 } from 'rrmc';
 import { useNavigate } from 'react-router-dom';
 import APISDK from 'src/api/api-sdk';
+import { useDispatch } from 'react-redux';
+import { OpenGlobalAlertDialog } from 'src/redux/actions/set-global-alert-dialog';
+import { GlobalAlertSizeOptions } from 'src/components/_core/global-alert-dialog';
 
 const EmailLogin = ( porps: any ): React.ReactElement => {
-  const modelInterface = {
-    open: () => null,
-    close: () => null
-  };
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const formRef: any = useRef(null);
-  const [modal, setModal] = useState(modelInterface);
-  const [modalSuccess, setModalSuccess] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalMessage, setModaMessage] = useState('');
-
-  const onCloseEnd = () => {
-    modal.close();
-  };
+  const dispatch = useDispatch();
 
   const loginUser = (e: FormEvent) => {
     e.preventDefault();
@@ -38,45 +29,49 @@ const EmailLogin = ( porps: any ): React.ReactElement => {
       email: email,
       password: password
     })
-      .then((response: any) => {
-        console.log(response);
+      .then(() => {
         formRef.current.reset();
-        porps.setIsLoading(false);
         setEmail('');
         setPassword('');
         return navigate('/');
       })
       .catch((error: any) => {
         console.log(error);
-        porps.setIsLoading(false);
-        setModalSuccess(false);
-        setModalTitle('Error');
         if ( !error.response ) {
-          setModaMessage(`Ha sucedido un error intentando acceder a su cuenta de Nedii.<br/><br/>Errores:<ol><li>Error enviando informacion al servidor</li></ol>
-          Por favor contacte al equipo tecnico de Nedii mencionando el codigo: <b>"Error de conexion con el servidor"</b>.`);
-          return modal.open();
+          dispatch(OpenGlobalAlertDialog({
+            dialog: 'login-failure',
+            size: GlobalAlertSizeOptions.medium
+          }));
+          return;
         }
         const errorMessages = ArrayErrorsToHTMLList(error.response.data.errors);
-        setModaMessage(`Ha sucedido un error intentando acceder a su cuenta de Nedii.<br/><br/>Errores:<ol>${errorMessages}</ol>
-          Si esta seguro de que los datos son correctos, por favor contacte al equipo tecnico de Nedii mencionando el codigo: <b>"${error.response.statusText} - ${error.response.status}"</b>.`);
-        modal.open();
+        dispatch(OpenGlobalAlertDialog({
+          dialog: 'login-failure',
+          size: GlobalAlertSizeOptions.medium,
+          messageVariables: {
+            errorMessages: errorMessages,
+            status: error.response.status,
+            statusText: error.response.statusText,
+            email: email
+          }
+        }));
+      })
+      .finally(() => {
+        porps.setIsLoading(false);
       });
   };
 
   return (
     <>
-      <div className='col s12'><SubTitle text='Login con correo' /></div>
-      <Modal
-        setModal={setModal}
-        success={modalSuccess}
-        title={modalTitle}
-        message={modalMessage}
-        onCloseEnd={onCloseEnd}
-        fixedFooter={true} />
-      <EmailLoginFrom formRef={formRef}
-        email={email} setEmail={setEmail}
+      <div className='col s12'>
+        <SubTitle text='Login con correo' />
+      </div>
+      <EmailLoginFrom
+        formRef={formRef}
+        email={email}setEmail={setEmail}
         password={password} setPassword={setPassword}
-        loginUser={loginUser} isLoading={porps.isLoading} />
+        loginUser={loginUser}
+        isLoading={porps.isLoading} />
     </>
   );
 };

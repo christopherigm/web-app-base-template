@@ -2,12 +2,16 @@
 import React, {
   useRef
 } from 'react';
-import { Link } from 'react-router-dom';
+import {
+  Link,
+  useNavigate
+} from 'react-router-dom';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import * as M from 'materialize-css';
-import { useSelector } from 'react-redux';
 import { SetUserData } from 'src/redux/actions/user';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import NavSearchBox from 'src/components/_core/nav-search-box/nav-search-box';
 import DefaultNavButtons from 'src/components/_core/nav-bar/default-nav-buttons';
 import SystemValues from 'src/constants/SystemValues';
@@ -15,20 +19,24 @@ import SideMenu from './side-menu';
 import MenuItems from './menu-items';
 import './nav-bar.scss';
 
-const logoFile = '/assets/logo.png';
+interface NavBarInterface {
+  sectionMenu: Array<any>;
+  setSectionMenu: CallableFunction;
+  updateQuery?: CallableFunction;
+}
 
-const NavBar = (props: any): React.ReactElement => {
+const NavBar = (props: NavBarInterface): React.ReactElement => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const system = useSelector((state: any) => state.system);
   const systemValues = SystemValues.getInstance();
+  const system = useSelector((state: any) => state.system);
   const prefix = system.platform.prefix;
   // const logoURL = system && system.configurations &&
   //   system.configurations.id ?
   //   system.configurations.attributes.img_logo : `${prefix}${logoFile}`;
+  const logoFile = '/assets/logo.png';
   const logoURL = `${prefix}${logoFile}`;
   const sideNavRef: any = useRef(null);
-  const sectionMenu = props.sectionMenu || [];
 
   const closeSideNav = () => {
     const sideNav = M.Sidenav.getInstance(sideNavRef.current);
@@ -51,7 +59,9 @@ const NavBar = (props: any): React.ReactElement => {
 
   return (
     <>
-      <DefaultNavButtons setSectionMenu={props.setSectionMenu} />
+      <DefaultNavButtons
+        sectionMenu={props.sectionMenu}
+        setSectionMenu={props.setSectionMenu} />
       <div className='navbar-fixed'>
         <nav className='NavBar white black-text'>
           <div className='nav-wrapper container'>
@@ -61,7 +71,8 @@ const NavBar = (props: any): React.ReactElement => {
               }}>
             </Link>
             {
-              systemValues.searchAvailable ? <NavSearchBox updateQuery={props.updateQuery} /> : null
+              systemValues.searchAvailable ?
+                <NavSearchBox updateQuery={props.updateQuery} /> : null
             }
             <a href='#'
               data-target='mobile-demo'
@@ -73,7 +84,7 @@ const NavBar = (props: any): React.ReactElement => {
               className='right hide-on-med-and-down Menu'>
               <MenuItems
                 logout={logout}
-                sectionMenu={sectionMenu} />
+                sectionMenu={props.sectionMenu} />
             </ul>
           </div>
         </nav>
@@ -82,7 +93,7 @@ const NavBar = (props: any): React.ReactElement => {
         sideNavRef={sideNavRef}
         closeSideNav={closeSideNav}
         logout={logout}
-        sectionMenu={sectionMenu}
+        sectionMenu={props.sectionMenu}
         logo={logoURL} />
     </>
   );

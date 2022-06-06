@@ -2,7 +2,7 @@ import { APIGet } from 'src/api/communicator';
 import store from 'src/redux/store';
 import { SetUserData } from 'src/redux/actions/user';
 
-export const GetUserProfile = (): Promise<any> => {
+const GetUserProfile = (): Promise<any> => {
   return new Promise((res, rej) => {
     const user = store && store.getState().user &&
       store.getState().user.user &&

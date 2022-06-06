@@ -2,7 +2,7 @@ import axios from 'axios';
 import SystemValues from 'src/constants/SystemValues';
 import store from 'src/redux/store';
 
-const env = SystemValues.getInstance();
+const systemValues = SystemValues.getInstance();
 const instance = axios.create({
   headers: {
     'Content-Type': 'application/vnd.api+json'
@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 export const APIGet = ( endpoint: string, includeBaseURL = true ): Promise<any> => {
-  const url = `${env.apiBaseUrl}${endpoint}`;
+  const url = `${systemValues.apiBaseUrl}${endpoint}`;
   const jwt = store && store.getState().user &&
     store.getState().user.jwt &&
     store.getState().user.jwt.access ?
@@ -36,7 +36,7 @@ export const APIGet = ( endpoint: string, includeBaseURL = true ): Promise<any> 
 };
 
 export const APIPost = ( endpoint: string, data: any, includeBaseURL = true ): Promise<any> => {
-  const url = `${env.apiBaseUrl}${endpoint}`;
+  const url = `${systemValues.apiBaseUrl}${endpoint}`;
   const jwt = store && store.getState().user &&
     store.getState().user.jwt &&
     store.getState().user.jwt.access ?
@@ -64,7 +64,7 @@ export const APIPost = ( endpoint: string, data: any, includeBaseURL = true ): P
 };
 
 export const APIPatch = ( endpoint: string, data: any, includeBaseURL = true ): Promise<any> => {
-  const url = `${env.apiBaseUrl}${endpoint}`;
+  const url = `${systemValues.apiBaseUrl}${endpoint}`;
   const jwt = store && store.getState().user &&
     store.getState().user.jwt &&
     store.getState().user.jwt.access ?
@@ -91,7 +91,7 @@ export const APIPatch = ( endpoint: string, data: any, includeBaseURL = true ): 
 };
 
 export const APIDelete = ( endpoint: string, includeBaseURL = true ): Promise<any> => {
-  const url = `${env.apiBaseUrl}${endpoint}`;
+  const url = `${systemValues.apiBaseUrl}${endpoint}`;
   const jwt = store && store.getState().user &&
     store.getState().user.jwt &&
     store.getState().user.jwt.access ?

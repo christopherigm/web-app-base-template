@@ -2,6 +2,7 @@ import React, {
   useState
 } from 'react';
 import {
+  HorizontalSpace,
   SubTitle
 } from 'rrmc';
 import { Link } from 'react-router-dom';
@@ -17,7 +18,14 @@ const Home = (): React.ReactElement => {
         setSectionMenu={setSectionMenu}
         sectionMenu={sectionMenu} />
       <div className='container'>
-        <SubTitle text='iCV' fullWidth={true} Link={Link} />
+        <HorizontalSpace size='small' />
+        <SubTitle
+          text='Hello World'
+          fullWidth={true}
+          Link={Link}
+          align='left' />
+        <HorizontalSpace size='small' />
+        <Link to='/examples'>Samples</Link>
       </div>
       <Footer />
     </div>

@@ -28,13 +28,17 @@ const Examples = (): React.ReactElement => {
         <HorizontalSpace size='small' />
         <a
           className='waves-effect waves-light btn'
-          onClick={() => dispatch(OpenGlobalAlertDialog('global-alert-sample-ok'))}>
+          onClick={() => dispatch(OpenGlobalAlertDialog({
+            dialog: 'global-alert-sample-ok'
+          }))}>
           Global alert OK
         </a>
         <HorizontalSpace size='x-small' />
         <a
           className='waves-effect waves-light btn'
-          onClick={() => dispatch(OpenGlobalAlertDialog('global-alert-sample-fail'))}>
+          onClick={() => dispatch(OpenGlobalAlertDialog({
+            dialog: 'global-alert-sample-fail'
+          }))}>
           Global alert Fail
         </a>
       </div>

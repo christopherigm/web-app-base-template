@@ -4,17 +4,17 @@ import { SetUserData } from 'src/redux/actions/user';
 import GetUser from './get-user';
 import GetUserProfile from './get-user-profile';
 
-interface payload {
+interface payloadInterface {
   email: string;
   password: string;
 }
 
-const Login = ( payload: payload ): Promise<any> => {
+const Login = ( payload: payloadInterface ): Promise<any> => {
   const data = {
     data: {
+      type: 'login',
       email: payload.email,
-      password: payload.password,
-      type: 'login'
+      password: payload.password
     }
   };
   return new Promise((res, rej) => {

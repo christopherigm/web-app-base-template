@@ -5,32 +5,16 @@ import React, {
   useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   SubTitle,
-  ArrayErrorsToHTMLList,
-  Modal
+  ArrayErrorsToHTMLList
 } from 'rrmc';
-import RegisterUserAPICall from './register-user-api-calls';
+import { OpenGlobalAlertDialog } from 'src/redux/actions/set-global-alert-dialog';
+import { GlobalAlertSizeOptions } from 'src/components/_core/global-alert-dialog';
 import EmailFrom from './email-from';
+import APISDK from 'src/api/api-sdk';
 
-const modelInterface = {
-  open: () => null,
-  close: () => null
-};
-
-const newUserPayload = {
-  data: {
-    type: 'User',
-    attributes: {
-      first_name: '',
-      last_name: '',
-      email: '',
-      username: '',
-      password: '',
-      img_picture: ''
-    }
-  }
-};
 
 const EmailRegistration = ( porps: any ): React.ReactElement => {
   const navigate = useNavigate();
@@ -40,57 +24,73 @@ const EmailRegistration = ( porps: any ): React.ReactElement => {
   const [password, setPassword] = useState('');
   const [passwordConf, setPasswordConf] = useState('');
   const formRef: any = useRef(null);
-  const [modal, setModal] = useState(modelInterface);
-  const [modalSuccess, setModalSuccess] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalMessage, setModaMessage] = useState('');
+  const dispatch = useDispatch();
 
-  const onCloseEnd = () => {
-    modal.close();
-    if ( modalSuccess ) return navigate('/login');
-  };
+  // const onCloseEnd = () => {
+  //   modal.close();
+  //   if ( modalSuccess ) return navigate('/login');
+  // };
 
   const registerUser = (e: FormEvent) => {
     e.preventDefault();
     porps.setIsLoading(true);
-    newUserPayload.data.attributes.first_name = firstName;
-    newUserPayload.data.attributes.last_name = lastName;
-    newUserPayload.data.attributes.email = email;
-    newUserPayload.data.attributes.username = email;
-    newUserPayload.data.attributes.password = password;
-    RegisterUserAPICall(newUserPayload)
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      username: email,
+      password: password
+    };
+    APISDK.RegisterUser(data)
       .then(() => {
+        dispatch(OpenGlobalAlertDialog({
+          dialog: 'registration-success',
+          size: GlobalAlertSizeOptions.medium,
+          messageVariables: {
+            firstName: firstName
+          }
+        }));
         formRef.current.reset();
-        porps.setIsLoading(false);
-        setModalSuccess(true);
-        setModalTitle('Cuenta creada');
-        setModaMessage(`<b>${firstName}</b>, su cuenta de Nedii ha sido creada exitosamente.<br/><br/>
-          Le hemos enviado un correo electronico a <b>${email}</b> para poder confirmar su identidad.<br/><br/>
-          Por favor complete el registro siguiendo el enlace de activacion enviado a su correo.<br/><br/>
-          A continuacion, usted sera redirigido a la pantalla de login, gracias.`);
-        setEmail(''); setPassword(''); setFirstName('');
-        modal.open();
+        setEmail('');
+        setPassword('');
+        setFirstName('');
+        return navigate('/');
       })
       .catch((error: any) => {
-        porps.setIsLoading(false);
-        setModalSuccess(false);
-        setModalTitle('Error');
+        console.log('ssasasasa', error);
         if ( !error.response ) {
-          setModaMessage(`<b>${firstName}</b>, ha sucedido un error creando su cuenta de Nedii.<br/><br/>Errores:<ol><li>Error enviando informacion al servidor</li></ol>
-          Por favor contacte al equipo tecnico de Nedii mencionando el codigo: <b>"Error de conexion con el servidor"</b>.`);
-          return modal.open();
+          dispatch(OpenGlobalAlertDialog({
+            dialog: 'registration-generic-failure',
+            size: GlobalAlertSizeOptions.medium,
+            messageVariables: {
+              firstName: firstName,
+              email: email
+            }
+          }));
+          return;
         }
         const errorMessages = ArrayErrorsToHTMLList(error.response.data.errors);
-        setModaMessage(`<b>${firstName}</b>, ha sucedido un error creando su cuenta de Nedii.<br/><br/>Errores:<ol>${errorMessages}</ol>
-          Si esta seguro de que los datos son correctos, por favor contacte al equipo tecnico de Nedii mencionando el codigo: <b>"${error.response.statusText} - ${error.response.status}"</b>.`);
-        modal.open();
+        dispatch(OpenGlobalAlertDialog({
+          dialog: 'registration-generic-failure',
+          size: GlobalAlertSizeOptions.medium,
+          messageVariables: {
+            firstName: firstName,
+            status: error.response.status,
+            statusText: error.response.statusText,
+            errorMessages: errorMessages
+          }
+        }));
+      })
+      .finally(() => {
+        porps.setIsLoading(false);
       });
   };
 
   return (
     <>
-      <div className='col s12'><SubTitle text='Registro con correo' /></div>
-      <Modal setModal={setModal} success={modalSuccess} title={modalTitle} message={modalMessage} onCloseEnd={onCloseEnd} fixedFooter={true} />
+      <div className='col s12'>
+        <SubTitle text='Registro con correo' />
+      </div>
       <EmailFrom formRef={formRef}
         firstName={firstName} setFirstName={setFirstName}
         lastName={lastName} setLastName={setLastName}

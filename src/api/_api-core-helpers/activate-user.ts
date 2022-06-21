@@ -1,8 +1,7 @@
 import { APIPost } from 'src/api/communicator';
 
-const ActivateUserCall = ( token: string ): Promise<any> => {
+const ActivateUser = ( token: string ): Promise<any> => {
   return new Promise((res, rej) => {
-    const url = 'activate-user';
     const data = {
       data: {
         type: 'ActivateUser',
@@ -11,7 +10,7 @@ const ActivateUserCall = ( token: string ): Promise<any> => {
         }
       }
     };
-    APIPost( url, data )
+    APIPost( 'activate-user', data )
       .then((d: any) => {
         const response = { ...d };
         res(response);
@@ -22,4 +21,4 @@ const ActivateUserCall = ( token: string ): Promise<any> => {
   });
 };
 
-export default ActivateUserCall;
+export default ActivateUser;

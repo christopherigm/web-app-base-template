@@ -18,7 +18,7 @@ const ActivateUser = (): React.ReactElement => {
   const token = params.token || null;
 
   useEffect(() => {
-    APISDK.ActivateUserCall( token )
+    APISDK.ActivateUser( token )
       .then((data: any) => {
         setStatus({
           success: data.success,

@@ -1,0 +1,8 @@
+replicas: 2
+service:
+  externalPort: 80
+  internalPort: 3000
+host: "web-app.iguzman.com.mx"
+image: "christopherguzman/web-app"
+tag: "main"
+branch: "main"

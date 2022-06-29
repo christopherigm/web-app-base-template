@@ -1,4 +1,4 @@
-replicas: 2
+replicas: 1
 service:
   externalPort: 80
   internalPort: 3000

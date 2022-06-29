@@ -31,7 +31,8 @@ const triggerJenkinsJob = () => {
   return new Promise((res, rej) => {
     console.log('\n========= Triggering Jenkins Job =========');
     instance.post(jenkins, {
-      BRANCH: branch
+      BRANCH: branch,
+      REPLICAS: 1
     })
       .then((response) => {
         res(response.data);
@@ -44,6 +45,7 @@ const triggerJenkinsJob = () => {
 
 const getBranchName = () => {
   return new Promise((res, rej) => {
+    // git rev-parse HEAD --> commit hash
     exec('git branch --show-current', (err, stdout) => {
       if (err) return rej(err);
       const b = stdout.toString().replace(/(\r\n|\n|\r)/gm, '');

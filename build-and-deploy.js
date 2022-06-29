@@ -5,12 +5,12 @@ const https = require('https');
 const axios = require('axios');
 
 // Editable variables
-const name = 'icv';
+const name = 'web-app';
 const jenkinsURL = 'https://jenkins.iguzman.com.mx';
-const jenkinsURLProd = 'https://jenkins.icv.com';
-const apiURL = 'https://api.icv.iguzman.com.mx/v1/';
-const apiURLProd = 'https://api.icv.com/v1/';
-const registry = 'registry.iguzman.com.mx';
+const jenkinsURLProd = 'https://jenkins.web-app.com';
+const apiURL = 'https://api.web-app.iguzman.com.mx/v1/';
+const apiURLProd = 'https://api.web-app.com/v1/';
+const registry = 'christopherguzman';
 // Editable variables
 
 const args = process.argv;
@@ -88,7 +88,13 @@ const buildDockerImage = () => {
       if (err) return rej(err);
       console.log('\nDocker Image built');
       res(stdout);
-    });
+    })
+      .stdout.on('data', (data) => {
+        console.log(data);
+      })
+      .on('data', (data) => {
+        console.log(data);
+      });
   });
 };
 

@@ -4,17 +4,13 @@ pipeline {
         skipStagesAfterUnstable()
     }
     environment {
-        APP_FOLDER = "icv"
+        APP_NAME = "web-app"
         BRANCH = sh(script: "echo ${BRANCH}", , returnStdout: true).trim()
     }
     stages {
-        stage("Deploy and start instance") {
+        stage("Deployment") {
             steps {
-                sh "cp /apps/$APP_FOLDER/env.default /apps/$APP_FOLDER/env"
-                sh "echo BRANCH=$BRANCH >> /apps/$APP_FOLDER/env"
-                sh "docker-compose --env-file /apps/$APP_FOLDER/env -f ./docker-compose.yaml pull"
-                sh "docker-compose --env-file /apps/$APP_FOLDER/env -f ./docker-compose.yaml down --remove-orphans -f"
-                sh "docker-compose --env-file /apps/$APP_FOLDER/env -f ./docker-compose.yaml up -d"
+                sh "helm upgrade $APP_NAME deployment --set branch=$BRANCH --set tag=$BRANCH"
             }
         }
     }

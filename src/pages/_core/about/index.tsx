@@ -1,7 +1,10 @@
 import React, {
   useState
 } from 'react';
-import { HorizontalSpace } from 'rrmc';
+import {
+  HorizontalSpace,
+  SizesEnum
+} from 'rrmc';
 import NavBar from 'src/components/_core/nav-bar';
 import Footer from 'src/components/_core/footer';
 
@@ -13,9 +16,9 @@ const About = (): React.ReactElement => {
       <NavBar
         setSectionMenu={setSectionMenu}
         sectionMenu={sectionMenu} />
-      <HorizontalSpace size='medium' />
+      <HorizontalSpace size={SizesEnum.medium} />
       About
-      <HorizontalSpace size='large' />
+      <HorizontalSpace size={SizesEnum.large} />
       <Footer />
     </div>
   );

@@ -3,7 +3,10 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { HorizontalSpace } from 'rrmc';
+import {
+  HorizontalSpace,
+  SizesEnum
+} from 'rrmc';
 
 const EmailFrom = ( props: any ): React.ReactElement => {
   const firstNameRef: any = useRef(null);
@@ -67,14 +70,18 @@ const EmailFrom = ( props: any ): React.ReactElement => {
           setRevealPasswords(!revealPasswords);
         }}> - { revealPasswords ? 'Ocultar contrasenas' : 'Revelar contrasenas' }</a>
       </div>
-      <div className='col s12'><HorizontalSpace size='small' /></div>
+      <div className='col s12'>
+        <HorizontalSpace size={SizesEnum.small} />
+      </div>
       <div className='col s12'>
         <input id='submit' type='submit'
           value='Crear cuenta'
           className='waves-effect waves-light btn right cyan darken-1 right white-text'
           disabled={!validForm()} />
       </div>
-      <div className={`col s12 ${ props.isLoading ? '' : 'hide' }`}><HorizontalSpace size='small' /></div>
+      <div className={`col s12 ${ props.isLoading ? '' : 'hide' }`}>
+        <HorizontalSpace size={SizesEnum.small} />
+      </div>
       <div className={`progress col s12 ${ props.isLoading ? '' : 'hide' }`}>
         <div className='indeterminate'></div>
       </div>

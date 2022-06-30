@@ -3,7 +3,9 @@ import React, {
 } from 'react';
 import {
   HorizontalSpace,
-  SubTitle
+  SubTitle,
+  SizesEnum,
+  TextAlignEnum
 } from 'rrmc';
 import { Link } from 'react-router-dom';
 import NavBar from 'src/components/_core/nav-bar';
@@ -21,13 +23,12 @@ const Home = (): React.ReactElement => {
         setSectionMenu={setSectionMenu}
         sectionMenu={sectionMenu} />
       <div className='container'>
-        <HorizontalSpace size='small' />
+        <HorizontalSpace size={SizesEnum.small} />
         <SubTitle
           text={ podName ? `Hello World from pod: ${podName}!` : 'Hello World!' }
           fullWidth={true}
-          Link={Link}
-          align='left' />
-        <HorizontalSpace size='small' />
+          align={TextAlignEnum.left} />
+        <HorizontalSpace size={SizesEnum.small} />
         <Link to='/examples'>Samples</Link>
       </div>
       <Footer />

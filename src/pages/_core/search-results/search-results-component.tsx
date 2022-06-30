@@ -2,7 +2,8 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-  HorizontalSpace
+  HorizontalSpace,
+  SizesEnum
 } from 'rrmc';
 import ParallaxHeaderImage from 'src/components/_core/parallax-header-image';
 
@@ -29,7 +30,7 @@ const SearchResults = (props: any): React.ReactElement => {
         size='x-small'
         title={title} />
       <div className='container'>
-        <HorizontalSpace size='small' />
+        <HorizontalSpace size={SizesEnum.small} />
       </div>
     </>
   );

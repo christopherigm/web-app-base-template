@@ -11,7 +11,9 @@ import {
   StrongText,
   DateParser,
   GetMoneyFormat,
-  LoadingIndicator
+  LoadingIndicator,
+  SizesEnum,
+  TextAlignEnum
 } from 'rrmc';
 import { useSelector } from 'react-redux';
 import APISDK from 'src/api/api-sdk';
@@ -59,7 +61,7 @@ const ChangeLog = (): React.ReactElement => {
         gradientOpacity='0.2'
         size='x-small'
         title='Change Log' />
-      <HorizontalSpace size='medium' />
+      <HorizontalSpace size={SizesEnum.medium} />
       <div className='container ChangeLog'>
       {
         items && items.length ?
@@ -113,7 +115,7 @@ const ChangeLog = (): React.ReactElement => {
                   <SubTitle
                     text={i.attributes.name}
                     fullWidth={true}
-                    align='left' />
+                    align={TextAlignEnum.left} />
                   <span className='ChangeLog__data-item grey-text text-darken-3'>
                     De {DateParser(i.attributes.date_start)} a {DateParser(i.attributes.date_end)}
                   </span>
@@ -157,16 +159,19 @@ const ChangeLog = (): React.ReactElement => {
                         className='grey-text text-darken-3'
                         dangerouslySetInnerHTML={{
                           __html: i.attributes.comments
-                      }}></div> : <HorizontalSpace size='x-small' />
+                      }}></div> : <HorizontalSpace size={SizesEnum.x_small} />
                   }
                   <TaskItem items={i.relationships.tasks} />
-                  <HorizontalSpace size='small' />
+                  <HorizontalSpace size={SizesEnum.small} />
                 </div>
               );
             })
           }
           <hr />
-          <StrongText text='Sumario' fullWidth={true} align='left' />
+          <StrongText
+            text='Sumario'
+            fullWidth={true}
+            align={TextAlignEnum.left} />
           <span className='ChangeLog__data-item grey-text text-darken-3'>
             Subtotal del proyecto: {GetMoneyFormat(subTotalOfProject)} MXN
           </span>
@@ -182,12 +187,12 @@ const ChangeLog = (): React.ReactElement => {
           <span className='ChangeLog__data-item grey-text text-darken-3'>
             <b>Total a pagar del proyecto: {GetMoneyFormat(totalToPayOfProject)} MXN</b>
           </span>
-          <HorizontalSpace size='xxx-small' />
+          <HorizontalSpace size={SizesEnum.xxx_small} />
           <hr />
           </> : null
       }
       </div>
-      <HorizontalSpace size='small' />
+      <HorizontalSpace size={SizesEnum.small} />
       <Footer />
     </div>
   );

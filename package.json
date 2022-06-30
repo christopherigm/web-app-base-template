@@ -1,6 +1,6 @@
 {
   "name": "name",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "private": false,
   "scripts": {
     "start": "react-scripts start",
@@ -63,7 +63,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "rrmc": "^0.0.55",
+    "rrmc": "^0.0.57",
     "sass": "^1.52.2",
     "stylelint": "^14.8.5",
     "stylelint-scss": "^4.2.0",

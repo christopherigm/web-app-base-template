@@ -4,7 +4,8 @@ import React, {
 import { useSelector } from 'react-redux';
 import {
   LoadingIndicator,
-  HorizontalSpace
+  HorizontalSpace,
+  SizesEnum
 } from 'rrmc';
 import NavBar from 'src/components/_core/nav-bar';
 import Footer from 'src/components/_core/footer';
@@ -32,7 +33,9 @@ const Login = (): React.ReactElement => {
       <div className='container row LoginUser'>
         <div className='col m1 l2'></div>
         <div className='col s12 m10 l8 row'>
-          <div className='col s12'><HorizontalSpace size='medium' /></div>
+          <div className='col s12'>
+            <HorizontalSpace size={SizesEnum.medium} />
+          </div>
           <EmailLogin isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
         <div className='col m1 l2'></div>

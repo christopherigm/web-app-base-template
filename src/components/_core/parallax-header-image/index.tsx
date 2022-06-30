@@ -3,7 +3,8 @@ import './parallax-header-image.scss';
 import { Link } from 'react-router-dom';
 import {
   Title,
-  Indicator
+  Indicator,
+  TextAlignEnum
 } from 'rrmc';
 
 const ParallaxHeaderImage = (props: any): React.ReactElement => {
@@ -25,7 +26,7 @@ const ParallaxHeaderImage = (props: any): React.ReactElement => {
           }
           <Title
             text={props.title}
-            align='left'
+            align={TextAlignEnum.left}
             fullWidth={true}
             shadow={true}
             Link={Link} />

@@ -33,6 +33,9 @@ const commonIndex = (req, res) => {
       og_site_name: 'iCV',
       url: '/',
       keywords: 'iCV'
+    },
+    data: {
+      hostname: process.env.HOSTNAME
     }
   });
 };

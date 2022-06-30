@@ -96,6 +96,15 @@ class SystemValues {
   public get changelogEnabled(): boolean {
     return this._changelogEnabled;
   }
+
+  public get DOMData(): any {
+    try {
+      const data: any = JSON.parse(window.document.getElementById('data')?.innerText || '{}');
+      return data;
+    } catch (error) {
+      return {};
+    }
+  }
 }
 
 export default SystemValues;

@@ -8,6 +8,7 @@ while IFS= read -r line; do
   available="${deployments[4]}"
   if [[ $name == $1 && $available=="1" ]]; then
     deployed=1;
+    break;
   fi
 done <<< "$(kubectl get deployment --all-namespaces)"
 

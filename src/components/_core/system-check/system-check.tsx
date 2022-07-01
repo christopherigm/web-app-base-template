@@ -8,8 +8,9 @@ import {
   useSelector,
   useDispatch
 } from 'react-redux';
-import SystemValues from 'src/constants/SystemValues';
-import { FILE_PREFIX } from 'src/constants/SystemValues';
+import SystemValues, {
+  FILE_PREFIX
+} from 'src/constants/SystemValues';
 import SetSystemData from 'src/redux/actions/system';
 import * as M from 'materialize-css';
 

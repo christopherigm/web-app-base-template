@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as M from 'materialize-css';
 import SystemValues from 'src/constants/SystemValues';
-import SystemCheck from 'src/components/_core/system-check/system-check';
+import SystemCheck from 'src/components/_core/system-check';
 import GlobalAlertDialog from 'src/components/_core/global-alert-dialog';
 import SystemConfigurationsLoader from 'src/components/_core/system-configuration-loader';
 import './footer.scss';

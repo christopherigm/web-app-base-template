@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import MenuItems from 'src/components/_core/nav-bar/menu-items';
+import MenuItems from './menu-items';
 
 const SideMenu = ( props: any ): React.ReactElement => {
   const userData = useSelector((state: any) => state.user);

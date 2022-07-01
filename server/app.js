@@ -26,13 +26,13 @@ app.locals.layout = false;
 const commonIndex = (req, res) => {
   return res.render('index', {
     seo: {
-      title: 'iCV',
-      og_title: 'iCV',
-      og_description: 'iCV',
+      title: 'Web App',
+      og_title: 'Web App',
+      og_description: 'Web App',
       img_og_picture: '/assets/seo.jpg',
-      og_site_name: 'iCV',
+      og_site_name: 'Web App',
       url: '/',
-      keywords: 'iCV'
+      keywords: 'Web App'
     },
     data: {
       hostname: process.env.HOSTNAME

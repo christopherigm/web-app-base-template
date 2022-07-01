@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ItemsSignedUser from 'src/components/_core/nav-bar/menu-items-signed-user';
-import ItemsNoSignedUser from 'src/components/_core/nav-bar/menu-items-no-signed-user';
+import ItemsSignedUser from './menu-items-signed-user';
+import ItemsNoSignedUser from './menu-items-no-signed-user';
 
 interface MenuItemInterface {
   to: string;
